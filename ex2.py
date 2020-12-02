@@ -12,9 +12,7 @@ VOCABULARY_SIZE = 300000
 
 # data
 dev_words_dict = {}
-
-
-# helpers
+dev_words_events = []
 
 
 def generate_output_line(number, value):
@@ -30,7 +28,7 @@ def generate_output_file():
 
 # init step
 def init_step():
-    with open(output_filename, 'w') as output_file:
+    with open(output_filename, 'w+') as output_file:
         output_file.write(generate_output_line(1, development_set_filename))
         output_file.write(generate_output_line(2, test_set_filename))
         output_file.write(generate_output_line(3, input_word))
@@ -42,10 +40,12 @@ def init_step():
 
 # development set preprocessing step
 def development_set_preprocessing_step():
-    read_dev_file()
+    generate_dev_words_dict()
+    with open(output_filename, 'a+') as output_file:
+        output_file.write(generate_output_line(7, len(dev_words_dict.keys())))
 
 
-def read_dev_file():
+def generate_dev_words_dict():
     with open(development_set_filename, 'r') as development_set_file:
         development_set_file_lines = development_set_file.readlines()
         for i in range(0, len(development_set_file_lines), 4):
@@ -54,6 +54,10 @@ def read_dev_file():
             article = article_data[2].strip()
             tokens = article.split()
             for token in tokens:
+                if token not in dev_words_dict.keys():
+                    dev_words_dict[token] = 1
+                else:
+                    dev_words_dict[token] = dev_words_dict[token]+1
 
 
 if len(sys.argv) >= 4:

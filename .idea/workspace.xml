@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2202e641-b4d0-43d7-bbe3-2046e375c606" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ex2.py" beforeDir="false" afterPath="$PROJECT_DIR$/ex2.py" afterDir="false" />
     </list>
@@ -77,12 +76,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1606925428654</updated>
-      <workItem from="1606925434038" duration="4343000" />
+      <workItem from="1606925434038" duration="5658000" />
     </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <created>1606934794044</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1606934794044</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="358" y="106" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606930352123">
@@ -90,28 +101,36 @@
     </state>
     <state x="358" y="106" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.832@0.25.1440.832" timestamp="1606930352123" />
     <state x="184" y="96" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.833@0.25.1440.833" timestamp="1606925942552" />
-    <state width="1398" height="211" key="GridCell.Tab.0.bottom" timestamp="1606934444188">
+    <state x="309" y="36" key="CommitChangelistDialog2" timestamp="1606934793837">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
-    <state width="1398" height="211" key="GridCell.Tab.0.bottom/0.25.1440.833@0.25.1440.833" timestamp="1606934444188" />
-    <state width="1398" height="211" key="GridCell.Tab.0.center" timestamp="1606934444187">
+    <state x="309" y="36" key="CommitChangelistDialog2/0.25.1440.833@0.25.1440.833" timestamp="1606934793837" />
+    <state width="1398" height="211" key="GridCell.Tab.0.bottom" timestamp="1606937549236">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
-    <state width="1398" height="211" key="GridCell.Tab.0.center/0.25.1440.833@0.25.1440.833" timestamp="1606934444187" />
-    <state width="1398" height="211" key="GridCell.Tab.0.left" timestamp="1606934444187">
+    <state width="1398" height="211" key="GridCell.Tab.0.bottom/0.25.1440.833@0.25.1440.833" timestamp="1606937549236" />
+    <state width="1398" height="211" key="GridCell.Tab.0.center" timestamp="1606937549236">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
-    <state width="1398" height="211" key="GridCell.Tab.0.left/0.25.1440.833@0.25.1440.833" timestamp="1606934444187" />
-    <state width="1398" height="211" key="GridCell.Tab.0.right" timestamp="1606934444188">
+    <state width="1398" height="211" key="GridCell.Tab.0.center/0.25.1440.833@0.25.1440.833" timestamp="1606937549236" />
+    <state width="1398" height="211" key="GridCell.Tab.0.left" timestamp="1606937549235">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
-    <state width="1398" height="211" key="GridCell.Tab.0.right/0.25.1440.833@0.25.1440.833" timestamp="1606934444188" />
+    <state width="1398" height="211" key="GridCell.Tab.0.left/0.25.1440.833@0.25.1440.833" timestamp="1606937549235" />
+    <state width="1398" height="211" key="GridCell.Tab.0.right" timestamp="1606937549236">
+      <screen x="0" y="25" width="1440" height="833" />
+    </state>
+    <state width="1398" height="211" key="GridCell.Tab.0.right/0.25.1440.833@0.25.1440.833" timestamp="1606937549236" />
+    <state x="320" y="162" key="Vcs.Push.Dialog.v2" timestamp="1606934795883">
+      <screen x="0" y="25" width="1440" height="833" />
+    </state>
+    <state x="320" y="162" key="Vcs.Push.Dialog.v2/0.25.1440.833@0.25.1440.833" timestamp="1606934795883" />
     <state x="450" y="353" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1606926118481">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
     <state x="450" y="353" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.25.1440.833@0.25.1440.833" timestamp="1606926118481" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ex2$ex2.coverage" NAME="ex2 Coverage Results" MODIFIED="1606934444180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ex2$ex2.coverage" NAME="ex2 Coverage Results" MODIFIED="1606937549227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
