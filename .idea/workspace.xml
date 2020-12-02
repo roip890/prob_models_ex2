@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2202e641-b4d0-43d7-bbe3-2046e375c606" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ex2.py" beforeDir="false" afterPath="$PROJECT_DIR$/ex2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +29,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -76,7 +75,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1606925428654</updated>
-      <workItem from="1606925434038" duration="5658000" />
+      <workItem from="1606925434038" duration="5856000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1606934794044</created>
@@ -85,7 +84,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606934794044</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="first commit">
+      <created>1606937963486</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1606937963486</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -101,10 +107,10 @@
     </state>
     <state x="358" y="106" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.832@0.25.1440.832" timestamp="1606930352123" />
     <state x="184" y="96" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.833@0.25.1440.833" timestamp="1606925942552" />
-    <state x="309" y="36" key="CommitChangelistDialog2" timestamp="1606934793837">
+    <state x="309" y="36" key="CommitChangelistDialog2" timestamp="1606937963264">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
-    <state x="309" y="36" key="CommitChangelistDialog2/0.25.1440.833@0.25.1440.833" timestamp="1606934793837" />
+    <state x="309" y="36" key="CommitChangelistDialog2/0.25.1440.833@0.25.1440.833" timestamp="1606937963264" />
     <state width="1398" height="211" key="GridCell.Tab.0.bottom" timestamp="1606937549236">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
@@ -121,10 +127,18 @@
       <screen x="0" y="25" width="1440" height="833" />
     </state>
     <state width="1398" height="211" key="GridCell.Tab.0.right/0.25.1440.833@0.25.1440.833" timestamp="1606937549236" />
-    <state x="320" y="162" key="Vcs.Push.Dialog.v2" timestamp="1606934795883">
+    <state x="229" y="73" key="SettingsEditor" timestamp="1606938091349">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
-    <state x="320" y="162" key="Vcs.Push.Dialog.v2/0.25.1440.833@0.25.1440.833" timestamp="1606934795883" />
+    <state x="229" y="73" key="SettingsEditor/0.25.1440.833@0.25.1440.833" timestamp="1606938091349" />
+    <state x="320" y="162" key="Vcs.Push.Dialog.v2" timestamp="1606937964838">
+      <screen x="0" y="25" width="1440" height="833" />
+    </state>
+    <state x="320" y="162" key="Vcs.Push.Dialog.v2/0.25.1440.833@0.25.1440.833" timestamp="1606937964838" />
+    <state x="397" y="270" key="com.intellij.ide.util.TipDialog" timestamp="1606938104343">
+      <screen x="0" y="25" width="1440" height="834" />
+    </state>
+    <state x="397" y="270" key="com.intellij.ide.util.TipDialog/0.25.1440.834@0.25.1440.834" timestamp="1606938104343" />
     <state x="450" y="353" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1606926118481">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
