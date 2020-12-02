@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="2202e641-b4d0-43d7-bbe3-2046e375c606" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/ex2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ex2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ex2.py" beforeDir="false" afterPath="$PROJECT_DIR$/ex2.py" afterDir="false" />
     </list>
@@ -13,11 +33,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JupyterTrust" id="42156e86-0e36-4a68-a2f5-d4dc765beb6f" />
   <component name="ProjectId" id="1l6lTNWgC7rQzqOScpW2M8p5zsH" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -106,6 +126,9 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <option name="LAST_COMMIT_MESSAGE" value="first commit" />
@@ -122,26 +145,46 @@
     </state>
     <state x="309" y="36" key="CommitChangelistDialog2/0.25.1440.833@0.25.1440.833" timestamp="1606937963264" />
     <state x="309" y="36" key="CommitChangelistDialog2/0.25.1440.834@0.25.1440.834" timestamp="1606938143790" />
-    <state width="1398" height="213" key="GridCell.Tab.0.bottom" timestamp="1606941072086">
-      <screen x="0" y="25" width="1440" height="833" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1606952653784">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606952653784" />
     <state width="1398" height="213" key="GridCell.Tab.0.bottom/0.25.1440.833@0.25.1440.833" timestamp="1606941072086" />
     <state width="1398" height="213" key="GridCell.Tab.0.bottom/0.25.1440.834@0.25.1440.834" timestamp="1606940646703" />
-    <state width="1398" height="213" key="GridCell.Tab.0.center" timestamp="1606941072085">
-      <screen x="0" y="25" width="1440" height="833" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1606952653784">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606952653784" />
     <state width="1398" height="213" key="GridCell.Tab.0.center/0.25.1440.833@0.25.1440.833" timestamp="1606941072085" />
     <state width="1398" height="213" key="GridCell.Tab.0.center/0.25.1440.834@0.25.1440.834" timestamp="1606940646702" />
-    <state width="1398" height="213" key="GridCell.Tab.0.left" timestamp="1606941072085">
-      <screen x="0" y="25" width="1440" height="833" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1606952653784">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606952653784" />
     <state width="1398" height="213" key="GridCell.Tab.0.left/0.25.1440.833@0.25.1440.833" timestamp="1606941072085" />
     <state width="1398" height="213" key="GridCell.Tab.0.left/0.25.1440.834@0.25.1440.834" timestamp="1606940646702" />
-    <state width="1398" height="213" key="GridCell.Tab.0.right" timestamp="1606941072085">
-      <screen x="0" y="25" width="1440" height="833" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1606952653784">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606952653784" />
     <state width="1398" height="213" key="GridCell.Tab.0.right/0.25.1440.833@0.25.1440.833" timestamp="1606941072085" />
     <state width="1398" height="213" key="GridCell.Tab.0.right/0.25.1440.834@0.25.1440.834" timestamp="1606940646703" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1606952493498">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606952493498" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1606952493498">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606952493498" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1606952493498">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606952493498" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1606952493498">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606952493498" />
     <state x="229" y="73" key="SettingsEditor" timestamp="1606938091349">
       <screen x="0" y="25" width="1440" height="833" />
     </state>
@@ -160,7 +203,24 @@
     </state>
     <state x="450" y="353" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.25.1440.833@0.25.1440.833" timestamp="1606926118481" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ex2.py</url>
+          <line>133</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ex2.py</url>
+          <line>124</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ex2$ex2.coverage" NAME="ex2 Coverage Results" MODIFIED="1606941072076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/prob_models_ex2$ex2.coverage" NAME="ex2 Coverage Results" MODIFIED="1606952653780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ex2$ex2.coverage" NAME="ex2 Coverage Results" MODIFIED="1606934444180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
