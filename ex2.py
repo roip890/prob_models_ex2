@@ -1,5 +1,6 @@
 import sys
 import math
+
 # app params
 development_set_filename = ''
 test_set_filename = ''
@@ -9,6 +10,10 @@ output_filename = ''
 # consts
 OUTPUT_PREFIX = 'OUTPUT'
 VOCABULARY_SIZE = 300000
+
+# min values
+dev_min_lambda = 0
+dev_min_perplexity = 0
 
 # dev data
 all_dev_words_dict = {}
@@ -23,10 +28,22 @@ ho_dev_words_dict_train = {}
 ho_dev_words_list_train = []
 ho_dev_words_dict_test = {}
 ho_dev_words_list_test = []
-ho_inverse_dic_train = {}
+ho_dev_inverse_dic_train = {}
+
 # test data
 all_test_words_dict = {}
 all_test_words_list = []
+# lidstone data
+ls_test_words_dict_train = {}
+ls_test_words_list_train = []
+ls_test_words_dict_test = {}
+ls_test_words_list_test = []
+# held out data
+ho_test_words_dict_train = {}
+ho_test_words_list_train = []
+ho_test_words_dict_test = {}
+ho_test_words_list_test = []
+ho_test_inverse_dic_train = {}
 
 
 # init step
@@ -44,7 +61,7 @@ def init_step():
 # development set preprocessing step
 def development_set_preprocessing_step():
     # lidstone and held out data data pre processing
-    lidstone_and_heldout_data_preprocessing()
+    dev_data_preprocessing()
 
     # write outputs
     with open(output_filename, 'a+') as output_file:
@@ -54,7 +71,11 @@ def development_set_preprocessing_step():
 # lidstone model training
 def lidstone_model_training():
     # calculate min perplexity
-    min_lambda, min_perplexity = find_min_perplexity()
+    global dev_min_lambda
+    global dev_min_perplexity
+    dev_min_lambda, dev_min_perplexity = ls_find_min_perplexity(ls_dev_words_dict_train,
+                                                                ls_dev_words_list_train,
+                                                                ls_dev_words_list_test)
 
     # write outputs
     with open(output_filename, 'a+') as output_file:
@@ -66,38 +87,51 @@ def lidstone_model_training():
         output_file.write(generate_output_line(13, ls_dev_words_dict_train.get('unseen-word', 0) / len(ls_dev_words_list_train)))
         output_file.write(generate_output_line(14, (ls_dev_words_dict_train.get(input_word, 0) + 0.1) / (len(ls_dev_words_list_train) + VOCABULARY_SIZE * 0.1)))
         output_file.write(generate_output_line(15, (ls_dev_words_dict_train.get('unseen-word', 0) + 0.1) / (len(ls_dev_words_list_train) + VOCABULARY_SIZE * 0.1)))
-        output_file.write(generate_output_line(16, calculate_perplexity(0.01)))
-        output_file.write(generate_output_line(17, calculate_perplexity(0.10)))
-        output_file.write(generate_output_line(18, calculate_perplexity(1.00)))
-        output_file.write(generate_output_line(19, min_lambda))
-        output_file.write(generate_output_line(20, min_perplexity))
+        output_file.write(generate_output_line(16, ls_calculate_perplexity(0.01, ls_dev_words_dict_train,
+                                                                           ls_dev_words_list_train,
+                                                                           ls_dev_words_list_test)))
+        output_file.write(generate_output_line(17, ls_calculate_perplexity(0.10, ls_dev_words_dict_train,
+                                                                           ls_dev_words_list_train,
+                                                                           ls_dev_words_list_test)))
+        output_file.write(generate_output_line(18, ls_calculate_perplexity(1.00, ls_dev_words_dict_train,
+                                                                           ls_dev_words_list_train,
+                                                                           ls_dev_words_list_test)))
+        output_file.write(generate_output_line(19, dev_min_lambda))
+        output_file.write(generate_output_line(20, dev_min_perplexity))
 
 
 # held out model training
 def held_out_model_training():
-    # generate inverse dictionary
-    global ho_inverse_dic_train
-    ho_inverse_dic_train = inverse_dic(ho_dev_words_dict_train)
-
     # write outputs
     with open(output_filename, 'a+') as output_file:
         output_file.write(generate_output_line(21, len(ho_dev_words_list_train)))
         output_file.write(generate_output_line(22, len(ho_dev_words_list_test)))
-        output_file.write(generate_output_line(23, tr_divided_by_nr(ho_dev_words_dict_train.get(input_word, 0)) / len(ho_dev_words_list_train)))
-        output_file.write(generate_output_line(24, tr_divided_by_nr(ho_dev_words_dict_train.get('unseen-word', 0)) / len(ho_dev_words_list_test)))
+        output_file.write(generate_output_line(23,
+                                               tr_divided_by_nr(ho_dev_words_dict_train.get(input_word, 0),
+                                                                ho_dev_words_dict_train,
+                                                                ho_dev_words_dict_test,
+                                                                ho_dev_inverse_dic_train)
+                                                                / len(ho_dev_words_list_train)))
+        output_file.write(generate_output_line(24,
+                                               tr_divided_by_nr(ho_dev_words_dict_train.get('unseen-word', 0),
+                                                                ho_dev_words_dict_train,
+                                                                ho_dev_words_dict_test,
+                                                                ho_dev_inverse_dic_train)
+                                                                / len(ho_dev_words_list_test)))
 
 
 # debug held out model
-def debug_ho():
+def debug_ho(train_dict, train_list, test_dict, test_list, train_inverse_dict):
     # held out debug calculation
-    tr_divided_by_nr_sum = sum([(tr_divided_by_nr(r) / len(ho_dev_words_list_test)) * nr(r) for r in ho_inverse_dic_train.keys()])
-    t0_divided_by_n0 = (tr_divided_by_nr(0) / len(ho_dev_words_list_test)) * nr(0)
+    tr_divided_by_nr_sum = sum([(tr_divided_by_nr(r, train_dict, test_dict, train_inverse_dict)
+                                 / len(test_list)) * nr(r, train_dict, train_inverse_dict) for r in train_inverse_dict.keys()])
+    t0_divided_by_n0 = (tr_divided_by_nr(0, train_dict, test_dict, train_inverse_dict)
+                        / len(test_list)) * nr(0, train_dict, train_inverse_dict)
     ho_debug_result = tr_divided_by_nr_sum + t0_divided_by_n0
 
     # write outputs
     with open(output_filename, 'a+') as output_file:
         output_file.write('debug held out: ' + str(ho_debug_result) + '\n')
-
 
 
 # model test set evaluation
@@ -108,9 +142,22 @@ def model_test_set_evaluation():
     # write outputs
     with open(output_filename, 'a+') as output_file:
         output_file.write(generate_output_line(25, len(all_test_words_list)))
+        lidstone_perplexity = ls_calculate_perplexity(dev_min_lambda,
+                                                      ls_test_words_dict_train,
+                                                      ls_test_words_list_train,
+                                                      ls_test_words_list_test)
+        held_out_perplexity = ho_calculate_perplexity(ho_test_words_dict_train,
+                                                      ho_test_words_list_train,
+                                                      ho_test_words_dict_test,
+                                                      ho_test_words_list_test,
+                                                      ho_test_inverse_dic_train)
+        output_file.write(generate_output_line(26, lidstone_perplexity))
+        output_file.write(generate_output_line(27, held_out_perplexity))
+        output_file.write(generate_output_line(28, 'L' if lidstone_perplexity < held_out_perplexity else 'H'))
+
 
 # data pre processing
-def lidstone_and_heldout_data_preprocessing():
+def dev_data_preprocessing():
     # data
     global all_dev_words_dict
     global all_dev_words_list
@@ -126,6 +173,7 @@ def lidstone_and_heldout_data_preprocessing():
     global ho_dev_words_list_test
     global ho_dev_words_dict_train
     global ho_dev_words_dict_test
+    global ho_dev_inverse_dic_train
 
     with open(development_set_filename, 'r') as development_set_file:
         development_set_file_lines = development_set_file.readlines()
@@ -162,12 +210,28 @@ def lidstone_and_heldout_data_preprocessing():
         for test_token in ho_dev_words_list_test:
             ho_dev_words_dict_test[test_token] = ho_dev_words_dict_test.get(test_token, 0) + 1
 
+        # generate inverse dictionary
+        ho_dev_inverse_dic_train = inverse_dic(ho_dev_words_dict_train)
+
 
 # test data pre processing
 def test_data_preprocessing():
     # data
     global all_test_words_dict
     global all_test_words_list
+
+    # lidstone data
+    global ls_test_words_list_train
+    global ls_test_words_list_test
+    global ls_test_words_dict_train
+    global ls_test_words_dict_test
+
+    # held out data
+    global ho_test_words_list_train
+    global ho_test_words_list_test
+    global ho_test_words_dict_train
+    global ho_test_words_dict_test
+    global ho_test_inverse_dic_train
 
     with open(test_set_filename, 'r') as test_set_file:
         test_set_file_lines = test_set_file.readlines()
@@ -180,24 +244,51 @@ def test_data_preprocessing():
                 all_test_words_list.append(token)
                 all_test_words_dict[token] = all_test_words_dict.get(token, 0) + 1
 
+        train_len = round(len(all_test_words_list) * 0.9)
+
+        # train
+        ls_test_words_list_train = all_test_words_list[:train_len]
+        for train_token in ls_test_words_list_train:
+            ls_test_words_dict_train[train_token] = ls_test_words_dict_train.get(train_token, 0) + 1
+
+        # test
+        ls_test_words_list_test = all_test_words_list[train_len:]
+        for test_token in ls_test_words_list_test:
+            ls_test_words_dict_test[test_token] = ls_test_words_dict_test.get(test_token, 0) + 1
+
+        train_len = round(len(all_test_words_list) * 0.5)
+
+        # train
+        ho_test_words_list_train = all_test_words_list[:train_len]
+        for train_token in ho_test_words_list_train:
+            ho_test_words_dict_train[train_token] = ho_test_words_dict_train.get(train_token, 0) + 1
+
+        # test
+        ho_test_words_list_test = all_test_words_list[train_len:]
+        for test_token in ho_test_words_list_test:
+            ho_test_words_dict_test[test_token] = ho_test_words_dict_test.get(test_token, 0) + 1
+
+        # generate inverse dictionary
+        ho_test_inverse_dic_train = inverse_dic(ho_dev_words_dict_train)
+
 
 # helpers
-def tr(r):
+def tr(r, train_dict, test_dict, train_inverse_dict):
     if r == 0:
-        return sum([ho_dev_words_dict_test.get(word, 0) for word in ho_dev_words_dict_test.keys() if word not in ho_dev_words_dict_train.keys()])
+        return sum([test_dict.get(word, 0) for word in test_dict.keys() if word not in train_dict.keys()])
     else:
-        return sum(ho_dev_words_dict_test.get(word, 0) for word in ho_inverse_dic_train[r])
+        return sum(test_dict.get(word, 0) for word in train_inverse_dict[r])
 
 
-def nr(r):
+def nr(r, train_dict, train_inverse_dict):
     if r == 0:
-        return VOCABULARY_SIZE - len(ho_dev_words_dict_train.keys())
+        return VOCABULARY_SIZE - len(train_dict.keys())
     else:
-        return len(ho_inverse_dic_train[r])
+        return len(train_inverse_dict[r])
 
 
-def tr_divided_by_nr(r):
-    return tr(r) / nr(r)
+def tr_divided_by_nr(r, train_dict, test_dict, train_inverse_dict):
+    return tr(r, train_dict, test_dict, train_inverse_dict) / nr(r, train_dict, train_inverse_dict)
 
 
 def inverse_dic(dict):
@@ -207,17 +298,28 @@ def inverse_dic(dict):
     return new_dic
 
 
-def calculate_perplexity(lamb):
-    return math.pow(2, (-1 * (sum(math.log2(ls_word_prob(word, lamb)) for word in ls_dev_words_list_test) / len(ls_dev_words_list_test))))
+def ls_calculate_perplexity(lamb, train_dict, train_list, test_list):
+    log_sum = sum([math.log2(ls_word_prob(word, lamb, train_dict, train_list)) for word in test_list])
+    return math.pow(2, ((-1 / len(test_list)) * log_sum))
 
 
-def ls_word_prob(word, lamb):
-    return (ls_dev_words_dict_train.get(word, 0) + lamb) / (len(ls_dev_words_list_train) + VOCABULARY_SIZE * lamb)
+def ls_word_prob(word, lamb, train_dict, train_list):
+    return (train_dict.get(word, 0) + lamb) / (len(train_list) + (VOCABULARY_SIZE * lamb))
 
 
-def find_min_perplexity():
-    perplexities = [(round(x * 0.01, 2), calculate_perplexity(round(x * 0.01, 2))) for x in range(1, 201)]
+def ls_find_min_perplexity(train_dict, train_list, test_list):
+    perplexities = [(round(x * 0.01, 2), ls_calculate_perplexity(round(x * 0.01, 2), train_dict, train_list, test_list)) for x in range(1, 201)]
     return min(perplexities, key=lambda x: x[1])
+
+
+def ho_calculate_perplexity(train_dict, train_list, test_dict, test_list, train_inverse_dict):
+    return math.pow(2, (
+                -1 * (sum(math.log2(ho_word_prob(word, train_dict, train_list, test_dict, test_list, train_inverse_dict)) * test_dict.get(word, 0) for word in test_dict.keys()) / len(test_list))))
+
+
+def ho_word_prob(word, train_dict, train_list, test_dict, test_list, train_inverse_dict):
+    word_r = train_inverse_dict.get(word, 0)
+    return tr_divided_by_nr(word_r, train_dict, test_dict, train_inverse_dict) / len(test_list)
 
 
 # output helpers
@@ -239,10 +341,11 @@ def generate_output_file():
     held_out_model_training()
 
     # held out debug
-    debug_ho()
+    debug_ho(ho_dev_words_dict_train, ho_dev_words_list_train, ho_dev_words_dict_test, ho_dev_words_list_test, ho_dev_inverse_dic_train)
 
     # model test set evaluation
     model_test_set_evaluation()
+
 
 # start
 if len(sys.argv) >= 4:
