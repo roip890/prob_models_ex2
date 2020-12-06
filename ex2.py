@@ -43,6 +43,7 @@ ho_test_words_dict_train = {}
 ho_test_words_list_train = []
 ho_test_words_dict_test = {}
 ho_test_words_list_test = []
+ho_test_inverse_dic_test = {}
 ho_test_inverse_dic_train = {}
 
 
@@ -58,10 +59,13 @@ def init_step():
         output_file.write(generate_output_line(6, input_word_uniform_prob))
 
 
-# development set preprocessing step
-def development_set_preprocessing_step():
-    # lidstone and held out data data pre processing
+# data preprocessing step
+def data_preprocessing_step():
+    # lidstone and held out dev data pre processing
     dev_data_preprocessing()
+
+    # lidstone and held out test data pre processing
+    test_data_preprocessing()
 
     # write outputs
     with open(output_filename, 'a+') as output_file:
@@ -70,13 +74,6 @@ def development_set_preprocessing_step():
 
 # lidstone model training
 def lidstone_model_training():
-    # calculate min perplexity
-    global dev_min_lambda
-    global dev_min_perplexity
-    dev_min_lambda, dev_min_perplexity = ls_find_min_perplexity(ls_dev_words_dict_train,
-                                                                ls_dev_words_list_train,
-                                                                ls_dev_words_list_test)
-
     # write outputs
     with open(output_filename, 'a+') as output_file:
         output_file.write(generate_output_line(8, len(ls_dev_words_list_test)))
@@ -87,10 +84,10 @@ def lidstone_model_training():
         output_file.write(generate_output_line(13, ls_dev_words_dict_train.get('unseen-word', 0) / len(ls_dev_words_list_train)))
         output_file.write(generate_output_line(14, (ls_dev_words_dict_train.get(input_word, 0) + 0.1) / (len(ls_dev_words_list_train) + VOCABULARY_SIZE * 0.1)))
         output_file.write(generate_output_line(15, (ls_dev_words_dict_train.get('unseen-word', 0) + 0.1) / (len(ls_dev_words_list_train) + VOCABULARY_SIZE * 0.1)))
-        output_file.write(generate_output_line(16, ls_calculate_perplexity(0.01, ls_dev_words_dict_train,
+        output_file.write(generate_output_line(16, ls_calculate_perplexity(1/100, ls_dev_words_dict_train,
                                                                            ls_dev_words_list_train,
                                                                            ls_dev_words_list_test)))
-        output_file.write(generate_output_line(17, ls_calculate_perplexity(0.10, ls_dev_words_dict_train,
+        output_file.write(generate_output_line(17, ls_calculate_perplexity(1/10, ls_dev_words_dict_train,
                                                                            ls_dev_words_list_train,
                                                                            ls_dev_words_list_test)))
         output_file.write(generate_output_line(18, ls_calculate_perplexity(1.00, ls_dev_words_dict_train,
@@ -136,9 +133,6 @@ def debug_ho(train_dict, train_list, test_dict, test_list, train_inverse_dict):
 
 # model test set evaluation
 def model_test_set_evaluation():
-    # test data processing
-    test_data_preprocessing()
-
     # write outputs
     with open(output_filename, 'a+') as output_file:
         output_file.write(generate_output_line(25, len(all_test_words_list)))
@@ -213,6 +207,13 @@ def dev_data_preprocessing():
         # generate inverse dictionary
         ho_dev_inverse_dic_train = inverse_dic(ho_dev_words_dict_train)
 
+        # calculate min perplexity
+        global dev_min_lambda
+        global dev_min_perplexity
+        dev_min_lambda, dev_min_perplexity = ls_find_min_perplexity(ls_dev_words_dict_train,
+                                                                    ls_dev_words_list_train,
+                                                                    ls_dev_words_list_test)
+
 
 # test data pre processing
 def test_data_preprocessing():
@@ -231,6 +232,7 @@ def test_data_preprocessing():
     global ho_test_words_list_test
     global ho_test_words_dict_train
     global ho_test_words_dict_test
+    global ho_test_inverse_dic_test
     global ho_test_inverse_dic_train
 
     with open(test_set_filename, 'r') as test_set_file:
@@ -270,6 +272,7 @@ def test_data_preprocessing():
 
         # generate inverse dictionary
         ho_test_inverse_dic_train = inverse_dic(ho_dev_words_dict_train)
+        ho_test_inverse_dic_test = inverse_dic(ho_dev_words_dict_test)
 
 
 # helpers
@@ -304,7 +307,11 @@ def ls_calculate_perplexity(lamb, train_dict, train_list, test_list):
 
 
 def ls_word_prob(word, lamb, train_dict, train_list):
-    return (train_dict.get(word, 0) + lamb) / (len(train_list) + (VOCABULARY_SIZE * lamb))
+    mu = (len(train_list)) / (len(train_list) + (VOCABULARY_SIZE * lamb))
+    mle = train_dict.get(word, 0) / len(train_list)
+    uni = 1 / VOCABULARY_SIZE
+    return (mu * mle) + ((1 - mu) * uni)
+    # return (train_dict.get(word, 0) + lamb) / (len(train_list) + (VOCABULARY_SIZE * lamb))
 
 
 def ls_find_min_perplexity(train_dict, train_list, test_list):
@@ -332,7 +339,7 @@ def generate_output_file():
     init_step()
 
     # development set preprocessing step
-    development_set_preprocessing_step()
+    data_preprocessing_step()
 
     # lidstone model training
     lidstone_model_training()
@@ -345,6 +352,25 @@ def generate_output_file():
 
     # model test set evaluation
     model_test_set_evaluation()
+
+    generate_matrix()
+
+
+def generate_matrix():
+    with open(output_filename, 'a+') as output_file:
+        for r in range(0, 10):
+            n_r = nr(r, ho_dev_words_dict_train,
+                             ho_dev_inverse_dic_train)
+            t_r = tr(r, ho_dev_words_dict_train,
+                             ho_dev_words_dict_test,
+                             ho_dev_inverse_dic_train)
+            f_h = round(tr_divided_by_nr(r, ho_dev_words_dict_train,
+                             ho_dev_words_dict_test,
+                             ho_dev_inverse_dic_train), 5)
+            prob = (r + dev_min_lambda) / (len(ho_dev_words_list_train) + (VOCABULARY_SIZE * dev_min_lambda))
+            f_l = round(prob * t_r, 5)
+
+            output_file.write('\t'.join([str(r), str(f_l), str(f_h), str(n_r), str(t_r)]) + '\n')
 
 
 # start
