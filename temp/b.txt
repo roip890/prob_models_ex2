@@ -1,0 +1,113 @@
+            <perfect-scrollbar class="cat-order-list" *ngIf="(cart$ | async)?.items?.length else emptyCart" perfectScrollbar [scrollIndicators]="false">
+              <ng-container *ngFor="let item of (cart$ | async)?.items; trackBy: cartTrack">
+               <ng-container *ngIf="!!selectedScaledItem && !!selectedScaledCartItem && (selectedScaledCartItem?.item_id === item?.item_id);else regularDisplay">
+                  <geteat-client-sidebar-scaled-item
+                    (cancel)="selectedScaledItem = null; selectedScaledCartItem = null"
+                    (save)="selectedScaledItem = null; selectedScaledCartItem = null"
+                    [cartItem]="selectedScaledCartItem"
+                    [item]="selectedScaledItem"
+                    [visible]="!!selectedScaledItem && !!selectedScaledCartItem">
+                </geteat-client-sidebar-scaled-item>
+               </ng-container>
+
+                <ng-template #regularDisplay>
+                  <div class="cat-order-list__item">
+                    <div class="cat-order-list__content">
+                      <a class="cat-order-list__img" href="javascript:" (click)="item?.item_type.toString() === menuItemTypesAlias.Scaled.toString() ? scaledItemClicked(item,menuItemMap.get(item.item_id),$event) : selectCartItem.emit(item)"
+                         [style.backgroundImage]="'url(https://files.geteat.co.il/rest/' + (restaurantId$ | async) + '/images/menu/md-' + menuItemMap.get(item.item_id)?.image +')'"></a>
+                      <div class="cat-order-list__info">
+                        <div class="cat-order-list__name">
+                          <a  (click)="item?.item_type.toString() === menuItemTypesAlias.Scaled.toString() ? scaledItemClicked(item,menuItemMap.get(item.item_id),$event) : selectCartItem.emit(item)" href="javascript:" class="brand-title">
+                            {{ menuItemMap.get(item.item_id)?.name }}
+                          </a>
+                        </div>
+                        <div class="cat-order-list__price-tile">
+                          <div class="cat-order-list__price-def brand-text">
+                            ₪{{ (item.discount_price > 0 ? item.discount_price : calculateItemPrice(item))+ (item?.diner_name ? ' | ' + item?.diner_name : '')}}</div>
+                          <div class="cat-order-list__price-old" *ngIf="item.discount_price > 0">
+                            ₪{{ item?.price}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="counter" *ngIf="(!item?.upsale_id || item?.upsale_id <= 0) else upsaleCounter">
+                      <ng-template #counterBox>
+                        <div class="cat-order-list__action">
+                          <div class="counter">
+                            <div class="counter__min danger-opacity" (click)="deleteItem.emit(item)">
+                              <svg class="icon ic-minus brand-danger-fill" width="10" height="2">
+                                <use xlink:href="assets/sprites/sprite.svg#ic-minus"></use>
+                              </svg>
+                            </div>
+                            <input class="counter__input brand-input-bg" type="text" [value]="item.count" readonly>
+                            <div class="counter__max success-opacity"
+                                 (click)="selectMenuItem.emit(menuItemMap.get(item.item_id))">
+                              <svg class="icon ic-plus brand-success-fill" width="10" height="10">
+                                <use xlink:href="assets/sprites/sprite.svg#ic-plus"></use>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                      <div class="cat-order-list__action" *ngIf="item.extras !== null || item?.item_type.toString() === menuItemTypesAlias?.Combination.toString() else counterBox">
+                        <div class="counter">
+                          <div class="cat-order-list__del" (click)="deleteItem.emit(item)">
+                            <svg class="icon ic-close brand-danger-fill" width="8" height="8">
+                              <use xlink:href="assets/sprites/sprite.svg#ic-close"></use>
+                            </svg>
+                          </div>
+                          <div class="cat-order-list__edit"  (click)="item?.item_type.toString() === menuItemTypesAlias.Scaled.toString() ? scaledItemClicked(item, menuItemMap.get(item.item_id),$event) : selectCartItem.emit(item)">
+                            <svg class="icon ic-pencil" width="10" height="10">
+                              <use xlink:href="assets/sprites/sprite.svg#ic-pencil"></use>
+                            </svg>
+                          </div>
+                          <div class="cat-order-list__add"
+                               *ngIf="!!menuItemMap?.get(item.item_id) && menuItemMap?.get(item.item_id)?.item_type !== itemTypes?.Scaled"
+                               (click)="selectMenuItem.emit(menuItemMap.get(item.item_id))">
+                            <svg class="icon ic-plus brand-success-fill" width="10" height="10">
+                              <use xlink:href="assets/sprites/sprite.svg#ic-plus"></use>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <ng-template #upsaleCounter>
+                      <div class="cat-order-list__action">
+                        <div class="counter">
+                          <div class="cat-order-list__del" (click)="deleteItem.emit(item)">
+                            <svg class="icon ic-close brand-danger-fill" width="8" height="8">
+                              <use xlink:href="assets/sprites/sprite.svg#ic-close"></use>
+                            </svg>
+                          </div>
+                          <div class="cat-order-list__edit" (click)="selectCartItem.emit(item)" *ngIf="item.extras !== null">
+                            <svg class="icon ic-pencil" width="10" height="10">
+                              <use xlink:href="assets/sprites/sprite.svg#ic-pencil"></use>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </ng-template>
+
+              </ng-container>
+              <div class="cat-coupon">
+                <ng-template #couponExist>
+                  <div class="cat-coupon__title" (click)="deleteCoupon(couponInput.value)">לחץ להסרת הקופון</div>
+                  <div class="cat-coupon__success">
+                    <svg class="icon ic-check" width="20" height="14">
+                      <use xlink:href="assets/sprites/sprite.svg#ic-check"></use>
+                    </svg>
+                    {{ (cart$ | async)?.coupons[0]?.name }}
+                  </div>
+                  <input type="string" hidden [value]="(cart$ | async)?.coupons[0]?.id" #couponInput>
+                </ng-template>
+                <div *ngIf="!(cart$ | async)?.coupons.length else couponExist">
+                  <div class="cat-coupon__title brand-primary-text">{{ 'HAVE_A_COUPON' | translate }}</div>
+                  <div class="cat-coupon__field">
+                    <input type="text" placeholder="קוד..." class="brand-input-bg brand-r-inputs" #code>
+                    <a *ngIf="!(couponLoading$ | async)" class="cat-coupon__btn brand-success-text" (click)="addCoupon(code.value); code.value = ''" href="javascript:">אישור</a>
+                    <geteat-client-spinner *ngIf="!!(couponLoading$ | async)" class="cat-coupon__loader" size="30"></geteat-client-spinner>
+                  </div>
+                </div>
+              </div>
+            </perfect-scrollbar>
